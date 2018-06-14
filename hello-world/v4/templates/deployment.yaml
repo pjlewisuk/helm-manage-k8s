@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    {{ template "hello-world.release_labels" . }}
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+      annotations:
+        checksum/config-map: {{ include (print $.Template.BasePath "/config-map.yaml") . | sha256sum }}
+    spec:
+      containers:
+        - name: {{ template "fullname" . }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: MAGIC_NUMBER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: magic-number
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 50%     # how many pods we can add at a time
+      maxUnavailable: 0 # maxUnavailable define how many pods can be
+                        # unavailable during the rolling update
