@@ -5,7 +5,7 @@
 * [ ] Ensure Helm is installed
 ```bash
 $ brew install kuberenetes-helm
-$ kubectl create -f gps2-storage-class.yaml
+$ kubectl create -f gp2-storage-class.yaml
 $ kubectl create -f rbac-config.yaml
 ```
 * Initialise helm in the cluster:
