@@ -8,6 +8,11 @@
 ```bash
 storageclass.storage.k8s.io "gp2" created
 ```
+* Set the `gp2` storage class you just created as the default storage class:
+`$ kubectl patch storageclass gp2 -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'`
+```bash
+storageclass.storage.k8s.io "gp2" patched
+```
 * Create a service account for Tiller:
 `$ kubectl create -f rbac-config.yaml`
 ```bash

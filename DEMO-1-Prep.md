@@ -6,6 +6,7 @@
 ```bash
 $ brew install kuberenetes-helm
 $ kubectl create -f gp2-storage-class.yaml
+$ kubectl patch storageclass gp2 -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 $ kubectl create -f rbac-config.yaml
 ```
 * Initialise helm in the cluster:
